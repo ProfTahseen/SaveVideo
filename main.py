@@ -2,10 +2,10 @@ import discord, downloader, time, os
 from discord.ext import commands
 from keep_alive import keep_alive
 
-prefixes = ['sv', 'Sv']
-bot = commands.Bot(command_prefix=prefixes)
+prefixes = ['sv ', 'Sv ']
+bot = commands.Bot(command_prefix = prefixes)
 bot.remove_command("help")
-TOKEN = "NzgzNzI4MTI0MDIxNzAyNjg5.X8e9sQ.jLlnAGqGg2I-6q2mPgOWkuGKR-0"
+TOKEN = "NzgzNzI4MTI0MDIxNzAyNjg5.X8e9sQ.a0d726LHyCZsjNjT0XkpmoxnBzQ"
 
 @bot.event
 async def on_ready():
