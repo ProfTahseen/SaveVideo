@@ -5,7 +5,7 @@ from keep_alive import keep_alive
 prefixes = ['sv ', 'Sv ']
 bot = commands.Bot(command_prefix = prefixes)
 bot.remove_command("help")
-TOKEN = "NzgzNzI4MTI0MDIxNzAyNjg5.X8e9sQ.a0d726LHyCZsjNjT0XkpmoxnBzQ"
+TOKEN = "NzgzNzI4MTI0MDIxNzAyNjg5.X8e9sQ.HvDWWhr4eX0S1XaG6q-xwCQY"
 
 @bot.event
 async def on_ready():
@@ -67,6 +67,7 @@ async def help(ctx):
         description="Maximum YouTube video lenght is 60 seconds.\nFor Reddit, it's limited with 7.5 MBs.",
         colour= discord.Color.blurple())
     embed.add_field(name='**sv ping**', value="View the bot latency.", inline=False)
+    embed.add_field(name='**sv help**', value="Display the help command.", inline=True)
     embed.add_field(name='**sv video <url>**', value="Downloads the video from the given link.", inline=True)
     embed.set_thumbnail(url="https://i.redd.it/6x3d4crl6y261.png")
     embed.set_footer(icon_url="https://i.redd.it/1i6tmwht8y261.png", text="Supported platforms: YouTube and Reddit")
