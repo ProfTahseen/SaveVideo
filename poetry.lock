@@ -155,6 +155,17 @@ version = "4.7.6"
 
 [[package]]
 category = "main"
+description = "Add .env support to your django/flask apps in development and deployments"
+name = "python-dotenv"
+optional = false
+python-versions = "*"
+version = "0.15.0"
+
+[package.extras]
+cli = ["click (>=5.0)"]
+
+[[package]]
+category = "main"
 description = "Python 3 library for downloading YouTube Videos."
 name = "pytube"
 optional = false
@@ -239,7 +250,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "b774850a358f50aa7900abb49156a53dcdf01662280716fec2d090d376b26f8d"
+content-hash = "884e5e0b8c6cd689a40eb760621a25d11c67d47ab9b9e4ca2ea7a803b97e687f"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -355,6 +366,10 @@ multidict = [
     {file = "multidict-4.7.6-cp38-cp38-win32.whl", hash = "sha256:5cf311a0f5ef80fe73e4f4c0f0998ec08f954a6ec72b746f3c179e37de1d210d"},
     {file = "multidict-4.7.6-cp38-cp38-win_amd64.whl", hash = "sha256:7388d2ef3c55a8ba80da62ecfafa06a1c097c18032a501ffd4cabbc52d7f2b19"},
     {file = "multidict-4.7.6.tar.gz", hash = "sha256:fbb77a75e529021e7c4a8d4e823d88ef4d23674a202be4f5addffc72cbb91430"},
+]
+python-dotenv = [
+    {file = "python-dotenv-0.15.0.tar.gz", hash = "sha256:587825ed60b1711daea4832cf37524dfd404325b7db5e25ebe88c495c9f807a0"},
+    {file = "python_dotenv-0.15.0-py2.py3-none-any.whl", hash = "sha256:0c8d1b80d1a1e91717ea7d526178e3882732420b03f08afea0406db6402e220e"},
 ]
 pytube = [
     {file = "pytube-10.0.0-py3-none-any.whl", hash = "sha256:e59ec01f9fb49a60008ce1623c794731fb240aa116399582705a426f7202cb6d"},

@@ -10,6 +10,7 @@ discord = "^1.0.1"
 flask = "^1.1.2"
 pytube = "^10.0.0"
 redvid = "^1.1.1"
+python-dotenv = "^0.15.0"
 
 [tool.poetry.dev-dependencies]
 
