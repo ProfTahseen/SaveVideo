@@ -64,6 +64,14 @@ version = "7.1.2"
 
 [[package]]
 category = "main"
+description = "Like functools.singledispatch but for values"
+name = "datadispatch"
+optional = false
+python-versions = "*"
+version = "1.0.0"
+
+[[package]]
+category = "main"
 description = "A mirror package for discord.py. Please install that instead."
 name = "discord"
 optional = false
@@ -206,6 +214,17 @@ socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
 
 [[package]]
 category = "main"
+description = "A simple personal task queue to track todo items"
+name = "tasks"
+optional = false
+python-versions = "*"
+version = "2.5.1"
+
+[package.dependencies]
+datadispatch = "*"
+
+[[package]]
+category = "main"
 description = "Backported and Experimental Type Hints for Python 3.5+"
 name = "typing-extensions"
 optional = false
@@ -250,7 +269,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "884e5e0b8c6cd689a40eb760621a25d11c67d47ab9b9e4ca2ea7a803b97e687f"
+content-hash = "ba18a9c4369bdca57e62263903dcb16e38e6db6432b5b85c7f904cdb7af3c909"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -288,6 +307,10 @@ chardet = [
 click = [
     {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
     {file = "click-7.1.2.tar.gz", hash = "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"},
+]
+datadispatch = [
+    {file = "datadispatch-1.0.0-py3-none-any.whl", hash = "sha256:527ad534881d7f6144a8ff643c260a3d2ae0d50e8ee24ec4b0fdae72d6c7beab"},
+    {file = "datadispatch-1.0.0.tar.gz", hash = "sha256:3c0456934e99f21137332deebbda05713dc07fcb142dfc01ef83d6b17aeaf08e"},
 ]
 discord = [
     {file = "discord-1.0.1-py3-none-any.whl", hash = "sha256:9d4debb4a37845543bd4b92cb195bc53a302797333e768e70344222857ff1559"},
@@ -382,6 +405,10 @@ redvid = [
 requests = [
     {file = "requests-2.25.0-py2.py3-none-any.whl", hash = "sha256:e786fa28d8c9154e6a4de5d46a1d921b8749f8b74e28bde23768e5e16eece998"},
     {file = "requests-2.25.0.tar.gz", hash = "sha256:7f1a0b932f4a60a1a65caa4263921bb7d9ee911957e0ae4a23a6dd08185ad5f8"},
+]
+tasks = [
+    {file = "tasks-2.5.1-py3-none-any.whl", hash = "sha256:c381ae6154b0a10074ca342b7bd58775233bb53e4e1cc474acbe22d3cf881757"},
+    {file = "tasks-2.5.1.tar.gz", hash = "sha256:7c4822cb622fb1d75bd32e040c60f9420f87e1ee0d56fbd69dc2dd71255a6f37"},
 ]
 typing-extensions = [
     {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
