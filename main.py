@@ -63,16 +63,18 @@ async def video(ctx, url):
 
                     try:
                         downloadYoutube(url)
-                        
-                        
-                        stop = time.perf_counter()
+                        stop = time.perf_counter()                        
+                    except:
+                        await ctx.send("Couldn't download the video from YouTube!")
+ 
+                    try:              
                         await ctx.send(content=f"Processed in {stop - start:0.1f} seconds. Sent by {ctx.message.author.mention}", file=discord.File(fp="video.mp4"))
                         await ctx.message.delete()
                             
                         print("Sent the YouTube video!")
                         destruct("video.mp4")
                     except:
-                        await ctx.send("Couldn't download the video from YouTube. (We are working on this error!")
+                        await ctx.send("Couldn't upload the video from YouTube!")
                         destruct("video.mp4")
             else:
                 await ctx.send("Your video is longer than 60 seconds!")    
@@ -86,6 +88,10 @@ async def video(ctx, url):
                 try:
                     downloadYoutube(url)
                     stop = time.perf_counter()
+                except:
+                    await ctx.send("Couldn't download the video from YouTube!")
+                
+                try:
                     await ctx.send(content=f"Processed in {stop - start:0.1f} seconds. Sent by {ctx.message.author.mention}", file=discord.File(fp="video.mp4"))
                     await ctx.message.delete()
                             
