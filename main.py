@@ -19,7 +19,7 @@ def isVideoCompatibleYoutube(url):
 def downloadYoutube(url):
 
     youtube = pytube.YouTube(url)
-    stream = youtube.streams.first()
+    stream = youtube.streams.get_by_itag(18)
     stream.download(filename="video")
     print("Downloaded the YouTube video.")
 
@@ -63,6 +63,8 @@ async def video(ctx, url):
 
                     try:
                         downloadYoutube(url)
+                        
+                        
                         stop = time.perf_counter()
                         await ctx.send(content=f"Processed in {stop - start:0.1f} seconds. Sent by {ctx.message.author.mention}", file=discord.File(fp="video.mp4"))
                         await ctx.message.delete()
@@ -70,7 +72,7 @@ async def video(ctx, url):
                         print("Sent the YouTube video!")
                         destruct("video.mp4")
                     except:
-                        await ctx.send("Couldn't download the video from YouTube! (Video too big)")
+                        await ctx.send("Couldn't download the video from YouTube. (We are working on this error!")
                         destruct("video.mp4")
             else:
                 await ctx.send("Your video is longer than 60 seconds!")    
@@ -90,7 +92,7 @@ async def video(ctx, url):
                     print("Sent the YouTube video!")
                     destruct("video.mp4")
                 except:
-                    await ctx.send("Couldn't download the video from YouTube! (Video too big)")
+                    await ctx.send("Couldn't download the video from YouTube! (File too big)")
                     destruct("video.mp4")
         else:
             await ctx.send("Your video is longer than 60 seconds!")
@@ -103,7 +105,7 @@ async def video(ctx, url):
                     stop = time.perf_counter()
 
                 except:
-                    await ctx.send("Couldn't download the video from Reddit! (Video too big)")
+                    await ctx.send("Couldn't download the video from Reddit!")
                                 
                 dir = []
                 for file in os.listdir():
@@ -120,7 +122,7 @@ async def video(ctx, url):
                     destruct("video.mp4")
                                     
                 except:       
-                    await ctx.send("Couldn't send the video from Reddit! (Video too big.)")
+                    await ctx.send("Couldn't send the video from Reddit!")
                     destruct("video.mp4")
                  
         else:
