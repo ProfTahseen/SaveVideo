@@ -7,6 +7,10 @@ authors = ["repl.it user <replituser@example.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 flask = "^1.1.2"
+discord = "^1.0.1"
+pytube = "^10.0.0"
+redvid = "^1.1.1"
+python-dotenv = "^0.15.0"
 
 [tool.poetry.dev-dependencies]
 
