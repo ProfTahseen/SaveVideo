@@ -122,7 +122,6 @@ async def video(ctx, url):
                 await ctx.message.delete()
         else:
             await ctx.send("This type of link isn't supported!")
-    
     else:
         await ctx.send("This platform isn't supported!")
         
@@ -133,14 +132,14 @@ async def help(ctx):
         description="Maximum video length is 60 seconds.\nSupports YouTube and Reddit.",
         colour=discord.Color.blurple())
     embed.add_field(name='**sv help**', value="Displays this message.", inline=False)
-    embed.add_field(name='**sv status/stats**', value="Shows the bot's status.", inline=False)
+    embed.add_field(name='**sv stats**', value="Shows the bot's statistics.", inline=False)
     embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given URL.", inline=False)
     embed.add_field(name='**Links**', value='[Invite!](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=191488&scope=bot) - [bots.gg](https://discord.bots.gg/bots/783728124021702689) - [top.gg](https://top.gg/bot/783728124021702689)')
     embed.set_thumbnail(url="https://i.hizliresim.com/orhNo4.png")
     await ctx.send(embed=embed)
 
-@bot.command(aliases=['Status', 'stats', 'Stats'])
-async def status(ctx):
+@bot.command(aliases=['Stats'])
+async def stats(ctx):
     await ctx.send(f"Bot latency is: `{round(bot.latency * 1000)}ms`\nBot is in `{len(bot.guilds)}` servers.")
 
 @bot.event
