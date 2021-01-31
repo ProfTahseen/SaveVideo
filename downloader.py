@@ -1,7 +1,7 @@
-import pytube
+import pytube, os
 from redvid import Downloader
 
-def checkLenght(url):
+def checkYoutube(url):
 
     if pytube.YouTube(url).length > 60:
         return False
@@ -19,8 +19,13 @@ def downloadReddit(url):
     reddit.auto_max = True
     reddit.log = False
     reddit.url = url
+    reddit.download()
 
-    if reddit.duration < 60:
-        reddit.download()
-    else:
-        return False
+def renameReddit(name):
+
+    dir = []
+    for file in os.listdir():
+        if file.endswith('.mp4'):
+            dir.append(file)
+
+    os.rename(dir[0], name)
