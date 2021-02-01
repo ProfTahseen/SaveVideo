@@ -30,12 +30,12 @@ async def video(ctx, url):
                 os.remove("savevideo.mp4")
 
         except:
-            await ctx.send("Something went wrong getting the video.")
-            print("Something went wrong getting the video.(Reddit)")
+            await ctx.send("Something went wrong getting the video.\n(If this happens frequently, try giving me the Administrator permission.)")
+            print(f"Something went wrong getting the video. (Reddit)\n{url}")
 
             await ctx.message.delete()
             os.remove("savevideo.mp4")
-        
+
     elif "youtu.be" or "/watch" or "/shorts" in url:
         if downloader.checkYoutube(url):
 
@@ -50,14 +50,14 @@ async def video(ctx, url):
                     os.remove("savevideo.mp4")
 
             except:
-                await ctx.send("Something went wrong getting the video.")
-                print("Something went wrong getting the video.(YouTube)")
+                await ctx.send("Something went wrong getting the video.\n(If this happens frequently, try giving me the Administrator permission.)")
+                print(f"Something went wrong getting the video. (YouTube)\n{url}")
 
                 await ctx.message.delete()
                 os.remove("savevideo.mp4")
         else:
             await ctx.send("Your video is longer than 60 seconds!")
-            print("Your video is longer than 60 seconds!(YouTube)")
+            print(f"Your video is longer than 60 seconds! (YouTube)\n{url}")
     else:
         await ctx.send("This link isn't supported!")
         print("This link isn't supported!")
@@ -65,20 +65,24 @@ async def video(ctx, url):
 @bot.command(aliases=['Help'])
 async def help(ctx):
     embed = discord.Embed(
-        title="How to use the SaveVideo:",
+
+        title="SaveVideo Support",
         description="Maximum video length is 60 seconds.\nSupports YouTube and Reddit.",
         colour=discord.Color.blurple())
+
     embed.add_field(name='**sv help**', value="Displays this message.", inline=False)
     embed.add_field(name='**sv stats**', value="Shows the bot's statistics.", inline=False)
     embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given URL.", inline=False)
-    embed.add_field(name='**Links**', value='[Invite](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=8&scope=bot) - [Feedback Server](https://discord.gg/pqVPHNCuDD)')
+    embed.add_field(name='**Links**', value='[Invite](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=8&scope=bot) | [Feedback Server](https://discord.gg/pqVPHNCuDD)')
     embed.set_thumbnail(url="https://i.hizliresim.com/orhNo4.png")
 
     await ctx.send(embed=embed)
+    print("Command used. (SV HELP)")
 
 @bot.command(aliases=['Stats'])
 async def stats(ctx):
     await ctx.send(f"Bot latency is: `{round(bot.latency * 1000)}ms`\nBot is in `{len(bot.guilds)}` servers.")
+    print("Command used. (SV STATS)")
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -91,4 +95,5 @@ async def on_command_error(ctx, error):
 
 if __name__ == "__main__":
     keepAlive()
-    bot.run(os.getenv('TOKEN'))
+    bot.run(os.getenv('TOKEN'))Optimized the code and fixed bugs, enjoy!
+
