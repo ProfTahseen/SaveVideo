@@ -95,5 +95,4 @@ async def on_command_error(ctx, error):
 
 if __name__ == "__main__":
     keepAlive()
-    bot.run(os.getenv('TOKEN'))Optimized the code and fixed bugs, enjoy!
-
+    bot.run(os.getenv('TOKEN'))
