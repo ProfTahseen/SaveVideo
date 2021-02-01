@@ -17,44 +17,40 @@ async def on_ready():
 @commands.cooldown(1, 5, commands.BucketType.guild)
 async def video(ctx, url):
     if "reddit.com" and "/comments/" in url:
-
+        
         try:
             async with ctx.typing():
                 downloader.downloadReddit(url)
                 downloader.renameReddit("savevideo.mp4")
-
+                
                 await ctx.send(content=f"Reddit video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
-                print("Sent a Reddit video!")
-
-                await ctx.message.delete()
                 os.remove("savevideo.mp4")
+                await ctx.message.delete()
+                print("Sent a Reddit video!")
 
         except:
             await ctx.send("Something went wrong getting the video.\n(If this happens frequently, try giving me the Administrator permission.)")
-            print(f"Something went wrong getting the video. (Reddit)\n{url}")
-
-            await ctx.message.delete()
             os.remove("savevideo.mp4")
+            await ctx.message.delete()
+            print(f"Something went wrong getting the video. (Reddit)\n{url}")
 
     elif "youtu.be" or "/watch" or "/shorts" in url:
         if downloader.checkYoutube(url):
 
-            try:
+            try:          
                 async with ctx.typing():
                     downloader.downloadYoutube(url)
-
                     await ctx.send(content=f"YouTube video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
-                    print("Sent the YouTube video!")
-
-                    await ctx.message.delete()
                     os.remove("savevideo.mp4")
+                    await ctx.message.delete()
+                    print("Sent the YouTube video!")
 
             except:
                 await ctx.send("Something went wrong getting the video.\n(If this happens frequently, try giving me the Administrator permission.)")
+                os.remove("savevideo.mp4")
+                await ctx.message.delete()
                 print(f"Something went wrong getting the video. (YouTube)\n{url}")
 
-                await ctx.message.delete()
-                os.remove("savevideo.mp4")
         else:
             await ctx.send("Your video is longer than 60 seconds!")
             print(f"Your video is longer than 60 seconds! (YouTube)\n{url}")
