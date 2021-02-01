@@ -29,3 +29,5 @@ def downloadReddit(url):
     reddit.max_d = 60
     reddit.url = url
     reddit.download()
+Optimized the code and fixed bugs, enjoy!
+
