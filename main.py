@@ -17,25 +17,28 @@ async def on_ready():
 @commands.cooldown(1, 5, commands.BucketType.guild)
 async def video(ctx, url):
     if "reddit.com" and "/comments/" in url:
-        async with ctx.typing():
-
-            try:
-                downloader.downloadReddit(url)
-                downloader.renameReddit("savevideo.mp4")
-
-                await ctx.send(content=f"Reddit video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
-                print("Sent a Reddit video!")
-                
-                await ctx.message.delete()
-                os.remove("savevideo.mp4")
-
-            except:
-                await ctx.send("Something went wrong getting the video.")
-                print("Something went wrong getting the video.(Reddit)")
-                
-                await ctx.message.delete()
-                os.remove("savevideo.mp4")
-
+        if downloader.checkReddit(url):
+            async with ctx.typing():
+    
+                try:
+                    downloader.downloadReddit(url)
+                    downloader.renameReddit("savevideo.mp4")
+    
+                    await ctx.send(content=f"Reddit video sent by {ctx.message.author.mention}",
+                                   file=discord.File(fp="savevideo.mp4"))
+                    print("Sent a Reddit video!")
+    
+                    await ctx.message.delete()
+                    os.remove("savevideo.mp4")
+    
+                except:
+                    await ctx.send("Something went wrong getting the video.")
+                    print("Something went wrong getting the video.(Reddit)")
+    
+                    await ctx.message.delete()
+                    os.remove("savevideo.mp4")
+        else:
+            await ctx.send("Your video is longer than 60 seconds!")
     elif "youtu.be" or "/watch" or "/shorts" in url:
         if downloader.checkYoutube(url):
             async with ctx.typing():
@@ -43,16 +46,17 @@ async def video(ctx, url):
                 try:
                     downloader.downloadYoutube(url)
 
-                    await ctx.send(content=f"YouTube video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
+                    await ctx.send(content=f"YouTube video sent by {ctx.message.author.mention}",
+                                   file=discord.File(fp="savevideo.mp4"))
                     print("Sent the YouTube video!")
-                    
+
                     await ctx.message.delete()
                     os.remove("savevideo.mp4")
 
                 except:
                     await ctx.send("Something went wrong getting the video.")
                     print("Something went wrong getting the video.(YouTube)")
-                    
+
                     await ctx.message.delete()
                     os.remove("savevideo.mp4")
         else:
