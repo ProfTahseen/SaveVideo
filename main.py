@@ -1,6 +1,5 @@
 import discord, os, downloader
 from discord.ext import commands
-from keepAlive import keepAlive
 from dotenv import load_dotenv
 
 prefixes = ['sv ', 'Sv ']
@@ -52,7 +51,7 @@ async def video(ctx, url):
                 print(f"Something went wrong getting the video. (YouTube)\n{url}")
 
         else:
-            await ctx.send("Your video is longer than 60 seconds!")
+            await ctx.send("Your video is longer than 60 seconds!\n(This is because Discord has an 8MB file upload limit.)")
             print(f"Your video is longer than 60 seconds! (YouTube)\n{url}")
     else:
         await ctx.send("This link isn't supported!")
@@ -73,12 +72,10 @@ async def help(ctx):
     embed.set_thumbnail(url="https://i.hizliresim.com/orhNo4.png")
 
     await ctx.send(embed=embed)
-    print("Command used. (SV HELP)")
 
 @bot.command(aliases=['Stats'])
 async def stats(ctx):
     await ctx.send(f"Bot latency is: `{round(bot.latency * 1000)}ms`\nBot is in `{len(bot.guilds)}` servers.")
-    print("Command used. (SV STATS)")
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -90,5 +87,4 @@ async def on_command_error(ctx, error):
         await ctx.send(f"Command on cooldown. Try again in {error.retry_after:0.1f} seconds.")
 
 if __name__ == "__main__":
-    keepAlive()
     bot.run(os.getenv('TOKEN'))
