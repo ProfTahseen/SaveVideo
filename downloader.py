@@ -5,7 +5,7 @@ reddit = Downloader()
 def checkReddit(url):
 	
 	reddit.url = url
-	reddit.max = True
+	reddit.min = True
 
 	reddit.check()
 	if reddit.duration > 60:
