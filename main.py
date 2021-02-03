@@ -13,7 +13,7 @@ async def on_ready():
     print('Bot is online.')
 
 @bot.command(aliases=['Video'])
-@commands.cooldown(1, 5, commands.BucketType.guild)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def video(ctx, url):
     if "reddit.com" and "/comments/" in url:
         
@@ -84,7 +84,7 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.CommandNotFound):
         await ctx.send("Couldn't find that command.")
     elif isinstance(error, commands.CommandOnCooldown):
-        await ctx.send(f"Command on cooldown. Try again in {error.retry_after:0.1f} seconds.")
+        await ctx.send(f"Command interserveral on cooldown. Try again in {error.retry_after:0.1f} seconds.")
 
 if __name__ == "__main__":
     bot.run(os.getenv('TOKEN'))
