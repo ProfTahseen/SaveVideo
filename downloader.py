@@ -38,6 +38,5 @@ def downloadReddit(url):
     reddit.max_s = 7.5 * (1 << 20)
     reddit.auto_max = True
     reddit.log = False
-    reddit.max_d = 60
     reddit.url = url
     reddit.download()
