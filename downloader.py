@@ -6,7 +6,8 @@ def checkReddit(url):
 	
 	reddit.url = url
 	reddit.min = True
-
+	reddit.log = False
+	
 	reddit.check()
 	if reddit.duration > 60:
 		return False
