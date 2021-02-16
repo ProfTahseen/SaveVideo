@@ -82,7 +82,7 @@ async def help(ctx):
 
 @bot.command(aliases=['Stats'])
 async def stats(ctx):
-    await ctx.send(f"Bot latency is: `{round(bot.latency * 1000)}ms`\nBot is in `{len(bot.guilds)}` servers.")
+    await ctx.send(f"Bot latency: `{round(bot.latency * 1000)}ms`\nTotal servers: `{len(bot.guilds)}`\nTotal users: `{sum(guild.member_count for guild in bot.guilds)}`")
 
 @bot.event
 async def on_command_error(ctx, error):
