@@ -1,12 +1,9 @@
 import discord, os, downloader
 from discord.ext import commands
-from keepAlive import keepAlive
-from dotenv import load_dotenv
 
 prefixes = ['sv ', 'Sv ']
 bot = commands.Bot(command_prefix=prefixes)
 bot.remove_command("help")
-load_dotenv('.env')
 
 @bot.event
 async def on_ready():
@@ -17,7 +14,7 @@ async def on_ready():
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def video(ctx, url):
     if "reddit.com" and "/comments/" in url:
-        if downloader.checkReddit(url):
+        if downloader.checkReddit(url, 60):
 
             try:
                 async with ctx.typing():
@@ -39,7 +36,7 @@ async def video(ctx, url):
             print(f"Your video is longer than 60 seconds! (Reddit)\n{url}")
 
     elif "youtu.be" or "/watch" or "/shorts" in url:
-        if downloader.checkYoutube(url):
+        if downloader.checkYoutube(url, 60):
     
             try:
                 async with ctx.typing():
@@ -75,14 +72,14 @@ async def help(ctx):
     embed.add_field(name='**sv stats**', value="Shows the bot's statistics.", inline=False)
     embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given URL.", inline=False)
     embed.add_field(name='**Links**',
-                    value='[Invite](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=8&scope=bot) | [Feedback Server](https://discord.gg/pqVPHNCuDD)')
+                    value='[Invite](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=8&scope=bot) | [Feedback Server](https://discord.gg/dUCeCNQHwV)')
     embed.set_thumbnail(url="https://i.hizliresim.com/orhNo4.png")
 
     await ctx.send(embed=embed)
 
 @bot.command(aliases=['Stats'])
 async def stats(ctx):
-    await ctx.send(f"Bot latency: `{round(bot.latency * 1000)}ms`\nTotal servers: `{len(bot.guilds)}`\nTotal users: `{sum(guild.member_count for guild in bot.guilds)}`")
+    await ctx.send(f"Bot latency: `{round(bot.latency * 1000)}ms`\nTotal servers: `{len(bot.guilds)}`\nTotal users: `{sum(guild.member_count for guild in bot.guilds) - 50000}`")
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -94,5 +91,4 @@ async def on_command_error(ctx, error):
         await ctx.send(f"Command on interserveral cooldown. Try again in {error.retry_after:0.1f} seconds.")
 
 if __name__ == "__main__":
-    keepAlive()
-    bot.run(os.getenv('TOKEN'))
+    bot.run("Your token here")
