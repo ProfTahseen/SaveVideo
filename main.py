@@ -11,7 +11,7 @@ async def on_ready():
     print('Bot is online.')
 
 @bot.command(aliases=['Video'])
-@commands.cooldown(1, 5, commands.BucketType.user)
+@commands.cooldown(1, 15, commands.BucketType.user)
 async def video(ctx, url):
     if "reddit.com" and "/comments/" in url:
         if downloader.checkReddit(url, 60):
