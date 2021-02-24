@@ -72,7 +72,7 @@ async def help(ctx):
     embed.add_field(name='**sv stats**', value="Shows the bot's statistics.", inline=False)
     embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given URL.", inline=False)
     embed.add_field(name='**Links**',
-                    value='[Invite](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=8&scope=bot) | [Feedback Server](https://discord.gg/dUCeCNQHwV)')
+                    value='[Invite](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=8&scope=bot) | [Feedback Server](https://discord.gg/dUCeCNQHwV) | [Source Code](https://github.com/Tahsinalp267/SaveVideoBOT)')
     embed.set_thumbnail(url="https://i.hizliresim.com/orhNo4.png")
 
     await ctx.send(embed=embed)
