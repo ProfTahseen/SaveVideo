@@ -27,12 +27,12 @@ async def video(ctx, url):
                     print("Sent a Reddit video!")
 
             except:
-                await ctx.send("Something went wrong getting the video.\n(If this happens frequently, try giving me the Administrator permission.)")
+                await ctx.send("Something went wrong getting the video.\n(If this happens frequently, try reinviting SaveVideo to your server.)")                
                 os.remove("savevideo.mp4")
                 await ctx.message.delete()
                 print(f"Something went wrong getting the video. (Reddit)\n{url}")
         else:
-            await ctx.send("Your video is longer than 60 seconds!\n(This is because Discord has an 8MB file upload limit.)")
+            await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
             print(f"Your video is longer than 60 seconds! (Reddit)\n{url}")
 
     elif "youtu.be" or "/watch" or "/shorts" in url:
@@ -47,13 +47,13 @@ async def video(ctx, url):
                     print("Sent the YouTube video!")
         
             except:
-                await ctx.send("Something went wrong getting the video.\n(If this happens frequently, try giving me the Administrator permission.)")
+                await ctx.send("Something went wrong getting the video.\n(If this happens frequently, try reinviting SaveVideo to your server.)")
                 os.remove("savevideo.mp4")
                 await ctx.message.delete()
                 print(f"Something went wrong getting the video. (YouTube)\n{url}")
         
         else:
-            await ctx.send("Your video is longer than 60 seconds!\n(This is because Discord has an 8MB file upload limit.)")
+            await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
             print(f"Your video is longer than 60 seconds! (YouTube)\n{url}")
         
     else:
@@ -79,7 +79,7 @@ async def help(ctx):
 
 @bot.command(aliases=['Stats'])
 async def stats(ctx):
-    await ctx.send(f"Bot latency: `{round(bot.latency * 1000)}ms`\nTotal servers: `{len(bot.guilds)}`\nTotal users: `{sum(guild.member_count for guild in bot.guilds) - 50000}`")
+    await ctx.send(f"Bot latency: `{round(bot.latency * 1000)}ms`\nTotal servers: `{len(bot.guilds)}`\nTotal users: `{sum(guild.member_count for guild in bot.guilds)}`")
 
 @bot.event
 async def on_command_error(ctx, error):
