@@ -91,4 +91,4 @@ async def on_command_error(ctx, error):
         await ctx.send(f"Command on interserveral cooldown. Try again in {error.retry_after:0.1f} seconds.")
 
 if __name__ == "__main__":
-    bot.run("Your token here")
+    bot.run("TOKEN")
