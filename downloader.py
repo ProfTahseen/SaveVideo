@@ -1,18 +1,21 @@
 import pytube, os
 from redvid import Downloader
 reddit = Downloader()
-
+	
 def checkReddit(url, lenghtReddit):
 	
-	reddit.url = url
-	reddit.min = True
-	reddit.log = False
-	
-	reddit.check()
-	if reddit.duration > lenghtReddit:
-		return False
-	else:
-		return True
+	try:
+		reddit.url = url
+		reddit.min = True
+		reddit.log = False
+		
+		reddit.check()
+		if reddit.duration > lenghtReddit:
+			return False
+		else:
+			return True
+	except:
+		pass
 
 def checkYoutube(url, lenghtYoutube):
 
