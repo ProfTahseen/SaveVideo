@@ -14,9 +14,9 @@ async def on_ready():
 @commands.cooldown(1, 15, commands.BucketType.user)
 async def video(ctx, url):
     if "reddit.com" and "/comments/" in url:
-        if downloader.checkReddit(url, 60):
-
-            try:
+        
+        try:
+            if downloader.checkReddit(url, 60):
                 async with ctx.typing():
                     downloader.downloadReddit(url)
                     downloader.renameReddit("savevideo.mp4")
@@ -24,38 +24,35 @@ async def video(ctx, url):
                     os.remove("savevideo.mp4")
                     await ctx.message.delete()
                     print("Sent a Reddit video!")
-
-            except:
-                await ctx.send("Something went wrong getting the video.\n(If this happens frequently, try reinviting SaveVideo to your server.)")                
-                os.remove("savevideo.mp4")
-                await ctx.message.delete()
-                print(f"Something went wrong getting the video. (Reddit)\n{url}")
-        else:
-            await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
-            print(f"Your video is longer than 60 seconds! (Reddit)\n{url}")
-
-    elif "youtu.be" or "/watch" or "/shorts" in url:
-        if downloader.checkYoutube(url, 60):
+            else:
+                await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
+                print(f"Your video is longer than 60 seconds! (Reddit)\n{url}")
+        
+        except:
+            await ctx.send("Something went wrong while getting the video.")
+            os.remove("savevideo.mp4")
+            await ctx.message.delete()
+            print(f"Something went wrong while getting the video. (Reddit)\n{url}")
     
-            try:
+    elif "youtu.be" or "/watch" or "/shorts" in url:
+        
+        try:      
+            if downloader.checkYoutube(url, 60):
                 async with ctx.typing():
                     downloader.downloadYoutube(url)
                     await ctx.send(content=f"YouTube video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
                     os.remove("savevideo.mp4")
                     await ctx.message.delete()
-                    print("Sent the YouTube video!")
-            
-            except:
-                await ctx.send("Something went wrong getting the video.\n(If this happens frequently, try reinviting SaveVideo to your server.)")
-                os.remove("savevideo.mp4")
-                await ctx.message.delete()
-                print(f"Something went wrong getting the video. (YouTube)\n{url}")    
-        else:
-            await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
-            print(f"Your video is longer than 60 seconds! (YouTube)\n{url}") 
-    else:
-        await ctx.send("This link isn't supported!")
-        print("This link isn't supported!")
+                    print("Sent the YouTube video!")            
+            else:
+                await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
+                print(f"Your video is longer than 60 seconds! (YouTube)\n{url}")
+        
+        except:
+            await ctx.send("Something went wrong while getting the video.")
+            os.remove("savevideo.mp4")
+            await ctx.message.delete()
+            print(f"Something went wrong while getting the video. (YouTube)\n{url}")
 
 @bot.command(aliases=['Help'])
 async def help(ctx):
