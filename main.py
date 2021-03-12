@@ -13,7 +13,7 @@ async def on_ready():
 @bot.command(aliases=['Video'])
 @commands.cooldown(1, 15, commands.BucketType.user)
 async def video(ctx, url):
-    if "youtu.be" or "/watch" or "/shorts" in url:
+    if "youtu" in url:
 
         try:
             if downloader.checkYoutube(url, 60):
@@ -33,7 +33,7 @@ async def video(ctx, url):
             await ctx.message.delete()
             print(f"Something went wrong while getting the video. (YouTube)\n{url}")
 
-    elif "reddit.com" and "/comments/" in url:
+    elif "/comments/" in url:
 
         try:
             if downloader.checkReddit(url, 60):
