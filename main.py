@@ -28,7 +28,7 @@ async def video(ctx, url):
                 print(f"Your video is longer than 60 seconds! (YouTube)\n{url}")
         
         except:
-            await ctx.send("Something went wrong while getting the video.")
+            await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
             os.remove("savevideo.mp4")
             await ctx.message.delete()
             print(f"Something went wrong while getting the video. (YouTube)\n{url}")
@@ -49,7 +49,7 @@ async def video(ctx, url):
                 print(f"Your video is longer than 60 seconds! (Reddit)\n{url}")
 
         except:
-            await ctx.send("Something went wrong while getting the video.")
+            await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
             os.remove("savevideo.mp4")
             await ctx.message.delete()
             print(f"Something went wrong while getting the video. (Reddit)\n{url}")
