@@ -22,7 +22,6 @@ async def video(ctx, url):
                     await ctx.send(content=f"YouTube video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
                     os.remove("savevideo.mp4")
                     await ctx.message.delete()
-                    print("Sent the YouTube video!")
             else:
                 await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
                 print(f"Your video is longer than 60 seconds! (YouTube)\n{url}")
@@ -43,7 +42,6 @@ async def video(ctx, url):
                     await ctx.send(content=f"Reddit video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
                     os.remove("savevideo.mp4")
                     await ctx.message.delete()
-                    print("Sent a Reddit video!")
             else:
                 await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
                 print(f"Your video is longer than 60 seconds! (Reddit)\n{url}")
