@@ -1,5 +1,6 @@
-import pytube, os
+import youtube_dl, os
 from redvid import Downloader
+
 reddit = Downloader()
 	
 def checkReddit(url, lengthReddit):
@@ -15,16 +16,39 @@ def checkReddit(url, lengthReddit):
 		return True
 
 def checkYoutube(url, lengthYoutube):
-    if pytube.YouTube(url).length > lengthYoutube:
-        return False
-    else:
-        return True
+    
+    ydl_opts = {
+        'format': 'worst',  
+        'outtmpl': 'savevideo.mp4'
+    }
+    
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        length = ydl.extract_info(url, download=False).get("duration")
+        if length > lengthYoutube:
+            return False
+        else:
+            return True
+    
+    #if pytube.YouTube(url).length > lengthYoutube:
+    #    return False
+    
+    #else:
+    #    return True
 
 def downloadYoutube(url):
-    pytube.YouTube(url).streams.get_by_itag(18).download(filename="savevideo")
+    
+    ydl_opts = {
+        'format': 'worst',  
+        'outtmpl': 'savevideo.mp4'
+    }
+    
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+    
+    #pytube.YouTube(url).streams.get_by_itag(18).download(filename="savevideo")
 
 def renameReddit(name):
-
+    
     dir = []
     for file in os.listdir():
         if file.endswith('.mp4'):
@@ -33,6 +57,7 @@ def renameReddit(name):
     os.rename(dir[0], name)
 
 def downloadReddit(url):
+    
     reddit.max_s = 7.5 * (1 << 20)
     reddit.auto_max = True
     reddit.log = False
