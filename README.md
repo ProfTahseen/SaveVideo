@@ -16,4 +16,5 @@ It downloads the video from the given link and sends them to your chat!
 ```sv video <url>``` Video downloading command. Put in an url from a supported site and it comes out as an MP4.
 
 **Supported websites:** [YouTube](https://www.youtube.com/) and [Reddit](https://www.reddit.com/).
+
 **Donate:** [BTC Wallet](https://savevideo.bitcoinwallet.com) | [DOGE Wallet](https://dogechain.info/address/DKzLGcnnoePnbPus45KSKjxa4HVCScovkE)
