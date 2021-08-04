@@ -1,65 +1,90 @@
-import youtube_dl, os
-from redvid import Downloader
+import discord, os, downloader, webserver
+from discord.ext import commands
 
-reddit = Downloader()
-	
-def checkReddit(url, lengthReddit):
-	
-	reddit.url = url
-	reddit.min = True
-	reddit.log = False
-		
-	reddit.check()
-	if reddit.duration > lengthReddit:
-		return False
-	else:
-		return True
+prefixes = ['sv ', 'Sv ']
+bot = commands.Bot(command_prefix=prefixes)
+bot.remove_command("help")
+TOKEN = os.environ['TOKEN']
 
-def checkYoutube(url, lengthYoutube):
-    
-    ydl_opts = {
-        'format': 'worst',  
-        'outtmpl': 'savevideo.mp4'
-    }
-    
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        length = ydl.extract_info(url, download=False).get("duration")
-        if length > lengthYoutube:
-            return False
-        else:
-            return True
-    
-    #if pytube.YouTube(url).length > lengthYoutube:
-    #    return False
-    
-    #else:
-    #    return True
+@bot.event
+async def on_ready():
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="sv help"))
+    print('Bot is online.')
 
-def downloadYoutube(url):
-    
-    ydl_opts = {
-        'format': 'worst',  
-        'outtmpl': 'savevideo.mp4'
-    }
-    
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
-    
-    #pytube.YouTube(url).streams.get_by_itag(18).download(filename="savevideo")
+@bot.command(aliases=['Video'])
+@commands.cooldown(1, 15, commands.BucketType.default)
+async def video(ctx, url):
+    if "youtu" in url:
 
-def renameReddit(name):
-    
-    dir = []
-    for file in os.listdir():
-        if file.endswith('.mp4'):
-            dir.append(file)
+        try:
+            async with ctx.typing():
+                if downloader.checkYoutube(url, 60):
+                    downloader.downloadYoutube(url)
+                    await ctx.send(content=f"YouTube video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
+                    os.remove("savevideo.mp4")
+                    await ctx.message.delete()
+                else:
+                    await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
+                    print(f"Your video is longer than 60 seconds! (YouTube)\n{url}")
+        
+        except:
+            await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
+            os.remove("savevideo.mp4")
+            await ctx.message.delete()
+            print(f"Something went wrong while getting the video. (YouTube)\n{url}")
 
-    os.rename(dir[0], name)
+    elif "/comments/" in url:
 
-def downloadReddit(url):
-    
-    reddit.max_s = 7.5 * (1 << 20)
-    reddit.auto_max = True
-    reddit.log = False
-    reddit.url = url
-    reddit.download()
+        try:
+            async with ctx.typing():
+                if downloader.checkReddit(url, 60):
+                    downloader.downloadReddit(url)
+                    downloader.renameReddit("savevideo.mp4")
+                    await ctx.send(content=f"Reddit video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
+                    os.remove("savevideo.mp4")
+                    await ctx.message.delete()
+                else:
+                    await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
+                    print(f"Your video is longer than 60 seconds! (Reddit)\n{url}")
+
+        except:
+            await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
+            os.remove("savevideo.mp4")
+            await ctx.message.delete()
+            print(f"Something went wrong while getting the video. (Reddit)\n{url}")
+
+    else:
+        await ctx.send("This platform is not supported!")
+
+@bot.command(aliases=['Help'])
+async def help(ctx):
+    embed = discord.Embed(
+        title="SaveVideo Support",
+        description="Maximum video length is 60 seconds.\nSupports YouTube and Reddit.",
+        colour=discord.Color.blurple())
+
+    embed.add_field(name='**sv help**', value="Displays this message.", inline=False)
+    embed.add_field(name='**sv stats**', value="Shows the bot's statistics.", inline=False)
+    embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given URL.", inline=False)
+    embed.add_field(name='**Links**', value='[Invite SaveVideo](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=8&scope=bot) | [Feedback Server](https://discord.gg/vNmAgsB3uV) | [Source Code](https://github.com/Tahsinalp267/SaveVideoBOT)')
+    embed.add_field(name='**Donate**', value="[BTC Wallet ID](3Cdu3fNCYJWYA4XqphjPKwXNTSvk6cFrvY)")
+ 
+    embed.set_thumbnail(url="https://i.hizliresim.com/orhNo4.png")
+    await ctx.send(embed=embed)
+
+@bot.command(aliases=['Stats'])
+async def stats(ctx):
+    await ctx.send(f"Bot latency: `{round(bot.latency * 1000)}ms`\nTotal servers: `{len(bot.guilds)}`\nTotal users: `{sum(guild.member_count for guild in bot.guilds)}`")
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("You have to provide an URL.")
+    elif isinstance(error, commands.CommandNotFound):
+        await ctx.send("Couldn't find that command.")
+    elif isinstance(error, commands.CommandOnCooldown):
+        await ctx.send(f"Command on interserveral cooldown. Try again in {error.retry_after:0.1f} seconds.")
+
+if __name__ == "__main__":
+    webserver.start()
+    bot.run(TOKEN)
