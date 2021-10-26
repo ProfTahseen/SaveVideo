@@ -24,13 +24,13 @@ async def video(ctx, url):
                     os.remove("savevideo.mp4")
                     await ctx.message.delete()
                 else:
-                    await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
-                    print(f"Your video is longer than 60 seconds! (YouTube)\n{url}")
+                    await ctx.send("Your video is longer than 60 seconds!\n(The reason behind this is the Discord upload limit.)", delete_after=5.0)
+                    await ctx.message.delete(delay=5)
         
         except:
             await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
-            os.remove("savevideo.mp4")
             await ctx.message.delete()
+            os.remove("savevideo.mp4")
             print(f"Something went wrong while getting the video. (YouTube)\n{url}")
 
     elif "/comments/" in url:
@@ -44,17 +44,18 @@ async def video(ctx, url):
                     os.remove("savevideo.mp4")
                     await ctx.message.delete()
                 else:
-                    await ctx.send("Your video is longer than 60 seconds!\n(This is because of the Discord upload limit.)")
-                    print(f"Your video is longer than 60 seconds! (Reddit)\n{url}")
+                    await ctx.send("Your video is longer than 60 seconds!\n(The reason behind this is the Discord upload limit.)", delete_after=5.0)
+                    await ctx.message.delete(delay=5)
 
         except:
             await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
-            os.remove("savevideo.mp4")
             await ctx.message.delete()
+            os.remove("savevideo.mp4")
             print(f"Something went wrong while getting the video. (Reddit)\n{url}")
 
     else:
-        await ctx.send("This platform is not supported!")
+        await ctx.send("That platform is not supported.", delete_after=5.0)
+        await ctx.message.delete(delay=5)
 
 @bot.command(aliases=['Help'])
 async def help(ctx):
@@ -66,10 +67,9 @@ async def help(ctx):
     embed.add_field(name='**sv help**', value="Displays this message.", inline=False)
     embed.add_field(name='**sv stats**', value="Shows the bot's statistics.", inline=False)
     embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given URL.", inline=False)
-    embed.add_field(name='**Links**', value='[Invite SaveVideo](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=8&scope=bot) | [Feedback Server](https://discord.gg/vNmAgsB3uV) | [Source Code](https://github.com/Tahsinalp267/SaveVideoBOT)')
-    embed.add_field(name='**Donate**', value="[BTC Wallet](https://savevideo.bitcoinwallet.com) | [DOGE Wallet](https://dogechain.info/address/DKzLGcnnoePnbPus45KSKjxa4HVCScovkE)")
+    embed.add_field(name='**Links**', value='[Invite SaveVideo](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=8&scope=bot) | [Donate PayPal](https://www.paypal.com/paypalme/devicetr) | [Support Server](https://discord.gg/vNmAgsB3uV) | [Source Code](https://github.com/Tahsinalp267/SaveVideoBOT)')
 
-    embed.set_thumbnail(url="https://i.hizliresim.com/orhNo4.png")
+    embed.set_thumbnail(url="https://i.hizliresim.com/bbv58bh.png")
     await ctx.send(embed=embed)
 
 @bot.command(aliases=['Stats'])
@@ -79,11 +79,14 @@ async def stats(ctx):
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("You have to provide an URL.")
+        await ctx.send("You have to provide an URL to download.", delete_after=5.0)
+        await ctx.message.delete(delay=5)
     elif isinstance(error, commands.CommandNotFound):
-        await ctx.send("Couldn't find that command.")
+        await ctx.send("Couldn't find that command.", delete_after=5.0)
+        await ctx.message.delete(delay=5)
     elif isinstance(error, commands.CommandOnCooldown):
-        await ctx.send(f"Command on interserveral cooldown. Try again in {error.retry_after:0.1f} seconds.")
+        await ctx.send(f"Command is on interserveral cooldown. Try again in {error.retry_after:0.1f} seconds.", delete_after=5.0)
+        await ctx.message.delete(delay=5)
 
 if __name__ == "__main__":
     webserver.start()
