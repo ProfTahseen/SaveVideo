@@ -29,7 +29,6 @@ async def video(ctx, url):
         
         except:
             await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
-            await ctx.message.delete()
             os.remove("savevideo.mp4")
             print(f"Something went wrong while getting the video. (YouTube)\n{url}")
 
@@ -49,7 +48,6 @@ async def video(ctx, url):
 
         except:
             await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
-            await ctx.message.delete()
             os.remove("savevideo.mp4")
             print(f"Something went wrong while getting the video. (Reddit)\n{url}")
 
