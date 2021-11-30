@@ -13,4 +13,4 @@ This discord.py bot downloads videos from YouTube and Reddit for you using pytub
 
 Just run the ```main.py``` file to host the bot yourself.
 
-![Donate](![https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png](paypal))
+<a href="http://google.com.au/" rel="some text">![Foo](http://www.google.com.au/images/nav_logo7.png)</a>
