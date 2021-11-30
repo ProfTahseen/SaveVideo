@@ -10,3 +10,5 @@ This discord.py bot downloads videos from YouTube and Reddit for you using pytub
 ```sv video <url>``` Video downloading command. Put in an URL from a supported site and it sends it out as an MP4.
 
 **Supported websites:** [YouTube](https://www.youtube.com/) and [Reddit](https://www.reddit.com/).
+
+Just run the ```main.py``` file to host the bot yourself.
