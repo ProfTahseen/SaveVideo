@@ -1,4 +1,4 @@
-# SaveVideoBOT
+# SaveVideo
 
 The simplest video downloader bot! Put in a Youtube/Reddit link and it comes out as an MP4.
 This discord.py bot downloads videos from YouTube and Reddit for you using pytube and redvid packages.
