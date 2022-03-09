@@ -1,6 +1,6 @@
-TOKEN = "TOKEN HERE"
+TOKEN = "ENTER TOKEN HERE"
 
-import discord, os, pytube
+import discord, os, pytube, webserver
 from redvid import Downloader
 from discord.ext import commands
 
@@ -65,7 +65,6 @@ async def video(ctx, url):
 			await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
 			os.remove("savevideo.mp4")
 			print(f"Something went wrong while getting the video. (YouTube)\n{url}")
-
 	elif "/comments/" in url:
 		try:
 			async with ctx.typing():
@@ -95,7 +94,7 @@ async def help(ctx):
 	embed.add_field(name='**sv help**', value="Displays this message.", inline=False)
 	embed.add_field(name='**sv stats**', value="Shows the bot's statistics.", inline=False)
 	embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given URL.", inline=False)
-	embed.add_field(name='**Links**', value='[Source Code](https://github.com/Tahsinalp267/SaveVideo)')
+	embed.add_field(name='[Source Code](https://github.com/Tahsinalp267/SaveVideo)', value='')
 	embed.set_thumbnail(url="https://i.hizliresim.com/bbv58bh.png")
 	await ctx.send(embed=embed)
 
@@ -116,4 +115,4 @@ async def on_command_error(ctx, error):
 		await ctx.message.delete(delay=5)
 
 if __name__ == "__main__":
-	bot.run(TOKEN)
+    bot.run(TOKEN)
