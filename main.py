@@ -1,23 +1,18 @@
-# main.py
+TOKEN = "TOKEN HERE"
 
 import discord, os, pytube
 from redvid import Downloader
 from discord.ext import commands
 
-### MODIFY FROM HERE ###
-
-TOKEN = "TOKEN HERE"
-
-### MODIFY UNTIL HERE ###
-
 reddit = Downloader()
+prefixes = ['sv ', 'Sv ']
+bot = commands.Bot(command_prefix=prefixes)
+bot.remove_command("help")
 	
 def checkReddit(url, lengthReddit):
-	
 	reddit.url = url
 	reddit.min = True
 	reddit.log = False
-		
 	reddit.check()
 	if reddit.duration > lengthReddit:
 		return False
@@ -25,37 +20,27 @@ def checkReddit(url, lengthReddit):
 		return True
 
 def checkYoutube(url, lengthYoutube):
-	
 	if pytube.YouTube(url).length > lengthYoutube:
 		return False
-	
 	else:
 		return True
 
 def downloadYoutube(url):
-	
 	pytube.YouTube(url).streams.get_by_itag(18).download(filename="savevideo.mp4")
 
 def renameReddit(name):
-	
 	dir = []
 	for file in os.listdir():
 		if file.endswith('.mp4'):
 			dir.append(file)
-
 	os.rename(dir[0], name)
-
+            
 def downloadReddit(url):
-	
 	reddit.max_s = 7.5 * (1 << 20)
 	reddit.auto_max = True
 	reddit.log = False
 	reddit.url = url
 	reddit.download()
-
-prefixes = ['sv ', 'Sv ']
-bot = commands.Bot(command_prefix=prefixes)
-bot.remove_command("help")
 
 @bot.event
 async def on_ready():
@@ -66,7 +51,6 @@ async def on_ready():
 @commands.cooldown(1, 15, commands.BucketType.default)
 async def video(ctx, url):
 	if "youtu" in url:
-
 		try:
 			async with ctx.typing():
 				if checkYoutube(url, 60):
@@ -77,14 +61,12 @@ async def video(ctx, url):
 				else:
 					await ctx.send("Your video is longer than 60 seconds!\n(The reason behind this is the Discord upload limit.)", delete_after=5.0)
 					await ctx.message.delete(delay=5)
-		
 		except:
 			await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
 			os.remove("savevideo.mp4")
 			print(f"Something went wrong while getting the video. (YouTube)\n{url}")
 
 	elif "/comments/" in url:
-
 		try:
 			async with ctx.typing():
 				if checkReddit(url, 60):
@@ -96,12 +78,10 @@ async def video(ctx, url):
 				else:
 					await ctx.send("Your video is longer than 60 seconds!\n(The reason behind this is the Discord upload limit.)", delete_after=5.0)
 					await ctx.message.delete(delay=5)
-
 		except:
 			await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
 			os.remove("savevideo.mp4")
 			print(f"Something went wrong while getting the video. (Reddit)\n{url}")
-
 	else:
 		await ctx.send("That platform is not supported.", delete_after=5.0)
 		await ctx.message.delete(delay=5)
@@ -112,12 +92,10 @@ async def help(ctx):
 		title="SaveVideo Support",
 		description="Maximum video length is 60 seconds.\nSupports YouTube and Reddit.",
 		colour=discord.Color.blurple())
-
 	embed.add_field(name='**sv help**', value="Displays this message.", inline=False)
 	embed.add_field(name='**sv stats**', value="Shows the bot's statistics.", inline=False)
 	embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given URL.", inline=False)
-	embed.add_field(name='**Links**', value='[Invite SaveVideo](https://discord.com/api/oauth2/authorize?client_id=783728124021702689&permissions=8&scope=bot) | [Donate PayPal](https://www.paypal.com/paypalme/devicetr) | [Support Server](https://discord.gg/vNmAgsB3uV) | [Source Code](https://github.com/Tahsinalp267/SaveVideo)')
-
+	embed.add_field(name='**Links**', value='[Source Code](https://github.com/Tahsinalp267/SaveVideo)')
 	embed.set_thumbnail(url="https://i.hizliresim.com/bbv58bh.png")
 	await ctx.send(embed=embed)
 
@@ -128,10 +106,10 @@ async def stats(ctx):
 @bot.event
 async def on_command_error(ctx, error):
 	if isinstance(error, commands.MissingRequiredArgument):
-		await ctx.send("You have to provide an URL to download.", delete_after=5.0)
+		await ctx.send("You have to provide an URL to download from.", delete_after=5.0)
 		await ctx.message.delete(delay=5)
 	elif isinstance(error, commands.CommandNotFound):
-		await ctx.send("Couldn't find that command.", delete_after=5.0)
+		await ctx.send("Couldn't find that command you're looking for.", delete_after=5.0)
 		await ctx.message.delete(delay=5)
 	elif isinstance(error, commands.CommandOnCooldown):
 		await ctx.send(f"Command is on interserveral cooldown. Try again in {error.retry_after:0.1f} seconds.", delete_after=5.0)
