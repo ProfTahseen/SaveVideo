@@ -1,6 +1,6 @@
 TOKEN = "ENTER TOKEN HERE"
 
-import discord, os, pytube, webserver
+import discord, os, pytube
 from redvid import Downloader
 from discord.ext import commands
 
@@ -94,7 +94,7 @@ async def help(ctx):
 	embed.add_field(name='**sv help**', value="Displays this message.", inline=False)
 	embed.add_field(name='**sv stats**', value="Shows the bot's statistics.", inline=False)
 	embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given URL.", inline=False)
-	embed.add_field(name='[Source Code](https://github.com/Tahsinalp267/SaveVideo)', value='')
+	embed.add_field(name='Links', value='[Source Code](https://github.com/Tahsinalp267/SaveVideo)')
 	embed.set_thumbnail(url="https://i.hizliresim.com/bbv58bh.png")
 	await ctx.send(embed=embed)
 
