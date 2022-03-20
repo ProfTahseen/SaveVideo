@@ -18,6 +18,20 @@ def checkReddit(url, lengthReddit):
 	else:
 		return True
 
+def renameReddit(name):
+	dir = []
+	for file in os.listdir():
+		if file.endswith('.mp4'):
+			dir.append(file)
+	os.rename(dir[0], name)         
+
+def downloadReddit(url):
+	reddit.max_s = 7.5 * (1 << 20)
+	reddit.auto_max = True
+	reddit.log = False
+	reddit.url = url
+	reddit.download()
+
 def checkYoutube(url, lengthYoutube):
 	if pytube.YouTube(url).length > lengthYoutube:
 		return False
@@ -26,20 +40,6 @@ def checkYoutube(url, lengthYoutube):
 
 def downloadYoutube(url):
 	pytube.YouTube(url).streams.get_by_itag(18).download(filename="savevideo.mp4")
-	
-def renameReddit(name):
-	dir = []
-	for file in os.listdir():
-		if file.endswith('.mp4'):
-			dir.append(file)
-	os.rename(dir[0], name)
-            
-def downloadReddit(url):
-	reddit.max_s = 7.5 * (1 << 20)
-	reddit.auto_max = True
-	reddit.log = False
-	reddit.url = url
-	reddit.download()
 
 @bot.event
 async def on_ready():
@@ -65,6 +65,7 @@ async def video(ctx, url):
 			await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
 			print(f"\nSomething went wrong while getting the video.\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 			os.remove("savevideo.mp4")
+	
 	elif "/comments/" in url:
 		try:
 			async with ctx.typing():
@@ -86,8 +87,8 @@ async def video(ctx, url):
 	else:
 		await ctx.send("That platform is not supported.", delete_after=5.0)
 		await ctx.message.delete(delay=5)
-		print(f"\nThat platform is not supported.\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
-		
+		print(f"\nThat platform is not supported.\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")	
+	
 @bot.command(aliases=['Help'])
 async def help(ctx):
 	embed = discord.Embed(
