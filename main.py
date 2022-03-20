@@ -1,14 +1,13 @@
-TOKEN = "ENTER TOKEN HERE"
-
 import discord, os, pytube
-from redvid import Downloader
 from discord.ext import commands
+from datetime import datetime, timezone, timedelta
+from redvid import Downloader
 
-reddit = Downloader()
 prefixes = ['sv ', 'Sv ']
 bot = commands.Bot(command_prefix=prefixes)
 bot.remove_command("help")
-	
+
+reddit = Downloader()
 def checkReddit(url, lengthReddit):
 	reddit.url = url
 	reddit.min = True
@@ -27,7 +26,7 @@ def checkYoutube(url, lengthYoutube):
 
 def downloadYoutube(url):
 	pytube.YouTube(url).streams.get_by_itag(18).download(filename="savevideo.mp4")
-
+	
 def renameReddit(name):
 	dir = []
 	for file in os.listdir():
@@ -45,7 +44,6 @@ def downloadReddit(url):
 @bot.event
 async def on_ready():
 	await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="sv help"))
-	print('Bot is online.')
 
 @bot.command(aliases=['Video'])
 @commands.cooldown(1, 15, commands.BucketType.default)
@@ -58,13 +56,15 @@ async def video(ctx, url):
 					await ctx.send(content=f"YouTube video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
 					os.remove("savevideo.mp4")
 					await ctx.message.delete()
+					print(f"\nYoutube video sent by {ctx.message.author.mention}\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 				else:
 					await ctx.send("Your video is longer than 60 seconds!\n(The reason behind this is the Discord upload limit.)", delete_after=5.0)
 					await ctx.message.delete(delay=5)
+					print(f"\nYour video is longer than 60 seconds!\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 		except:
 			await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
+			print(f"\nSomething went wrong while getting the video.\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 			os.remove("savevideo.mp4")
-			print(f"Something went wrong while getting the video. (YouTube)\n{url}")
 	elif "/comments/" in url:
 		try:
 			async with ctx.typing():
@@ -74,17 +74,20 @@ async def video(ctx, url):
 					await ctx.send(content=f"Reddit video sent by {ctx.message.author.mention}", file=discord.File(fp="savevideo.mp4"))
 					os.remove("savevideo.mp4")
 					await ctx.message.delete()
+					print(f"\Reddit video sent by {ctx.message.author.mention}\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 				else:
 					await ctx.send("Your video is longer than 60 seconds!\n(The reason behind this is the Discord upload limit.)", delete_after=5.0)
 					await ctx.message.delete(delay=5)
+					print(f"\nYour video is longer than 60 seconds!\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 		except:
 			await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
+			print(f"\nSomething went wrong while getting the video.\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 			os.remove("savevideo.mp4")
-			print(f"Something went wrong while getting the video. (Reddit)\n{url}")
 	else:
 		await ctx.send("That platform is not supported.", delete_after=5.0)
 		await ctx.message.delete(delay=5)
-
+		print(f"\nThat platform is not supported.\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
+		
 @bot.command(aliases=['Help'])
 async def help(ctx):
 	embed = discord.Embed(
@@ -97,22 +100,27 @@ async def help(ctx):
 	embed.add_field(name='Links', value='[Source Code](https://github.com/Tahsinalp267/SaveVideo)')
 	embed.set_thumbnail(url="https://i.hizliresim.com/bbv58bh.png")
 	await ctx.send(embed=embed)
+	print(f"\nhelp\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 
 @bot.command(aliases=['Stats'])
 async def stats(ctx):
 	await ctx.send(f"Bot latency: `{round(bot.latency * 1000)}ms`\nTotal servers: `{len(bot.guilds)}`\nTotal users: `{sum(guild.member_count for guild in bot.guilds)}`")
+	print(f"\nstats\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 
 @bot.event
 async def on_command_error(ctx, error):
 	if isinstance(error, commands.MissingRequiredArgument):
 		await ctx.send("You have to provide an URL to download from.", delete_after=5.0)
 		await ctx.message.delete(delay=5)
+		print(f"\nMissingRequiredArgument\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 	elif isinstance(error, commands.CommandNotFound):
 		await ctx.send("Couldn't find that command you're looking for.", delete_after=5.0)
 		await ctx.message.delete(delay=5)
+		print(f"\nCommandNotFound\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 	elif isinstance(error, commands.CommandOnCooldown):
 		await ctx.send(f"Command is on interserveral cooldown. Try again in {error.retry_after:0.1f} seconds.", delete_after=5.0)
 		await ctx.message.delete(delay=5)
+		print(f"\nCommandOnCooldown\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 
 if __name__ == "__main__":
-    bot.run(TOKEN)
+    bot.run("TOKEN")
