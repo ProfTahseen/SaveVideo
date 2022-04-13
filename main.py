@@ -123,4 +123,4 @@ async def on_command_error(ctx, error):
 		print(f"\nCommandOnCooldown\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 
 if __name__ == "__main__":
-    bot.run(TOKEN)
+    bot.run("TOKEN")
