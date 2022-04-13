@@ -3,8 +3,7 @@ from discord.ext import commands
 from datetime import datetime, timezone, timedelta
 from redvid import Downloader
 
-prefixes = ['sv ', 'Sv ']
-bot = commands.Bot(command_prefix=prefixes)
+bot = commands.Bot(command_prefix=['sv ', 'Sv ', 'SV'], case_insensitive=True)
 bot.remove_command("help")
 
 reddit = Downloader()
@@ -45,7 +44,7 @@ def downloadYoutube(url):
 async def on_ready():
 	await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="sv help"))
 
-@bot.command(aliases=['Video'])
+@bot.command()
 @commands.cooldown(1, 15, commands.BucketType.default)
 async def video(ctx, url):
 	if "youtu" in url:
@@ -89,7 +88,7 @@ async def video(ctx, url):
 		await ctx.message.delete(delay=5)
 		print(f"\nThat platform is not supported.\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")	
 	
-@bot.command(aliases=['Help'])
+@bot.command()
 async def help(ctx):
 	embed = discord.Embed(
 		title="SaveVideo Support",
@@ -103,7 +102,7 @@ async def help(ctx):
 	await ctx.send(embed=embed)
 	print(f"\nhelp\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 
-@bot.command(aliases=['Stats'])
+@bot.command()
 async def stats(ctx):
 	await ctx.send(f"Bot latency: `{round(bot.latency * 1000)}ms`\nTotal servers: `{len(bot.guilds)}`\nTotal users: `{sum(guild.member_count for guild in bot.guilds)}`")
 	print(f"\nstats\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
@@ -124,4 +123,4 @@ async def on_command_error(ctx, error):
 		print(f"\nCommandOnCooldown\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 
 if __name__ == "__main__":
-    bot.run("TOKEN")
+    bot.run(TOKEN)
