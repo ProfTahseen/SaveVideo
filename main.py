@@ -32,9 +32,9 @@ async def video(ctx, url):
 				os.remove("savevideo.mp4")
 				print(f"\nYoutube video sent by {ctx.message.author.mention}\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 			else:
-				await ctx.send("Your video is longer than 60 seconds!\n(Reason behind is the upload limit.)\nhttps://github.com/discord/discord-api-docs/issues/2037", delete_after=5.0)
+				await ctx.send("Your video is longer than 60 seconds.\n(Reason behind is the upload limit.)\nhttps://github.com/discord/discord-api-docs/issues/2037", delete_after=5.0)
 				await ctx.message.delete(delay=5)
-				print(f"\nYour video is longer than 60 seconds!\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
+				print(f"\nYour video is longer than 60 seconds.\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
 		except:
 			await ctx.send("Something went wrong while getting the video.\nTo notify the developers: https://discord.gg/vNmAgsB3uV")
 			print(f"\nSomething went wrong while getting the video.\n{url}\n{datetime.now(timezone(timedelta(hours=+3))).time()}")
@@ -48,11 +48,11 @@ async def video(ctx, url):
 async def help(ctx):
 	embed = discord.Embed(
 		title="SaveVideo Support",
-		description="Maximum video length is 60 seconds.\Only supports YouTube for now.",
+		description="Maximum video length is 60 seconds.\nOnly supports YouTube for now.",
 		colour=discord.Color.blurple())
 	embed.add_field(name='**sv help**', value="Displays this help message.", inline=False)
 	embed.add_field(name='**sv stats**', value="Shows the bot's statistics.", inline=False)
-	embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given (Youtube) URL.", inline=False)
+	embed.add_field(name='**sv video <URL>**', value="Downloads the video from the given URL.", inline=False)
 	embed.add_field(name='Links', value='[Source Code](https://github.com/Tahsinalp267/SaveVideo)')
 	embed.set_thumbnail(url="https://i.hizliresim.com/bbv58bh.png")
 	await ctx.send(embed=embed)
