@@ -1,6 +1,6 @@
 # SaveVideo
 
-The simplest video downloader bot! Put in a Youtube link and it comes out as an MP4. This discord.py bot downloads videos from YouTube using pytube. Only supports youtube for now.
+The simplest video downloader bot! Put in a Youtube link and it comes out as an MP4. This discord.py bot downloads videos from YouTube using pytube. Only supports Youtube for now.
 
 # Commands
 
